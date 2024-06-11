@@ -2360,6 +2360,11 @@ void CEnOceanESP3::ParseESP3Packet(uint8_t packettype, uint8_t *data, uint16_t d
 				m_id_chip = GetNodeID(data[9], data[10], data[11], data[12]);
 				Log(LOG_STATUS, "HwdID %d ChipID %08X ChipVersion %02X.%02X.%02X.%02X App %02X.%02X.%02X.%02X API %02X.%02X.%02X.%02X Description '%s'",
 					 m_HwdID, m_id_chip, data[13], data[14], data[15], data[16], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], (const char *)data + 17);
+				if (m_id_base != 0)
+				{
+					m_id_chip = m_id_base;
+					Log(LOG_STATUS, "Use Base ID %08X instead of Chip ID", m_id_chip);
+				}
 				return;
 			}
 			Debug(DEBUG_NORM, "HwdID %d, received response (%s)", m_HwdID, GetReturnCodeLabel(return_code));
